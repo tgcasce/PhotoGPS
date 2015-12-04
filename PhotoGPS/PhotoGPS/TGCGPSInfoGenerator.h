@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface TGCGPSInfoGenerator : NSObject
 
+
++ (instancetype)configGeneratorWithImageData:(NSData *)imageData;
+
+- (UIImage *)GPSImageWithoutGPS:(NSData *)image;
+- (BOOL)saveGPSImageWithoutGPS:(NSData *)image;
 @end
