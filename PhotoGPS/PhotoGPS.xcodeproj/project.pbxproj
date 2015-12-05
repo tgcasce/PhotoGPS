@@ -7,15 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4224D1BF1C12FCD3003E7850 /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4224D1BE1C12FCD3003E7850 /* MapLocationViewController.swift */; };
 		422721A41C0D9C7C0055AB75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721A31C0D9C7C0055AB75 /* AppDelegate.swift */; };
 		422721A61C0D9C7C0055AB75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721A51C0D9C7C0055AB75 /* ViewController.swift */; };
 		422721A91C0D9C7C0055AB75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 422721A71C0D9C7C0055AB75 /* Main.storyboard */; };
 		422721AB1C0D9C7C0055AB75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 422721AA1C0D9C7C0055AB75 /* Assets.xcassets */; };
 		422721AE1C0D9C7C0055AB75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 422721AC1C0D9C7C0055AB75 /* LaunchScreen.storyboard */; };
 		422721B81C0DE0090055AB75 /* TGCGPSInfoGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 422721B71C0DE0090055AB75 /* TGCGPSInfoGenerator.m */; };
+		422721BC1C11AA1E0055AB75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721BB1C11AA1E0055AB75 /* Constants.swift */; };
+		422721C01C11C4930055AB75 /* LocationInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721BF1C11C4930055AB75 /* LocationInfoTableViewController.swift */; };
+		422721C21C129A060055AB75 /* FindPlaceMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721C11C129A060055AB75 /* FindPlaceMarkViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4224D1BE1C12FCD3003E7850 /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
 		422721A01C0D9C7C0055AB75 /* PhotoGPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoGPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		422721A31C0D9C7C0055AB75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		422721A51C0D9C7C0055AB75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,6 +31,9 @@
 		422721B51C0DE0090055AB75 /* PhotoGPS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoGPS-Bridging-Header.h"; sourceTree = "<group>"; };
 		422721B61C0DE0090055AB75 /* TGCGPSInfoGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCGPSInfoGenerator.h; sourceTree = "<group>"; };
 		422721B71C0DE0090055AB75 /* TGCGPSInfoGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCGPSInfoGenerator.m; sourceTree = "<group>"; };
+		422721BB1C11AA1E0055AB75 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		422721BF1C11C4930055AB75 /* LocationInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInfoTableViewController.swift; sourceTree = "<group>"; };
+		422721C11C129A060055AB75 /* FindPlaceMarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindPlaceMarkViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,10 @@
 				422721B61C0DE0090055AB75 /* TGCGPSInfoGenerator.h */,
 				422721B71C0DE0090055AB75 /* TGCGPSInfoGenerator.m */,
 				422721B51C0DE0090055AB75 /* PhotoGPS-Bridging-Header.h */,
+				422721BB1C11AA1E0055AB75 /* Constants.swift */,
+				422721BF1C11C4930055AB75 /* LocationInfoTableViewController.swift */,
+				422721C11C129A060055AB75 /* FindPlaceMarkViewController.swift */,
+				4224D1BE1C12FCD3003E7850 /* MapLocationViewController.swift */,
 			);
 			path = PhotoGPS;
 			sourceTree = "<group>";
@@ -103,7 +115,7 @@
 				TargetAttributes = {
 					4227219F1C0D9C7C0055AB75 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = Z9QDL5YRNS;
+						DevelopmentTeam = KQ9383TZG7;
 					};
 				};
 			};
@@ -143,9 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4224D1BF1C12FCD3003E7850 /* MapLocationViewController.swift in Sources */,
 				422721B81C0DE0090055AB75 /* TGCGPSInfoGenerator.m in Sources */,
 				422721A61C0D9C7C0055AB75 /* ViewController.swift in Sources */,
 				422721A41C0D9C7C0055AB75 /* AppDelegate.swift in Sources */,
+				422721BC1C11AA1E0055AB75 /* Constants.swift in Sources */,
+				422721C21C129A060055AB75 /* FindPlaceMarkViewController.swift in Sources */,
+				422721C01C11C4930055AB75 /* LocationInfoTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,7 +223,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -245,7 +261,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -302,6 +318,7 @@
 				422721B41C0D9C7C0055AB75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

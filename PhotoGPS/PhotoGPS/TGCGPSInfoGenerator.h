@@ -8,12 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface TGCGPSInfoGenerator : NSObject
 
+@property (nonatomic, copy) NSString *latitude;
+@property (nonatomic, copy) NSString *longitude;
+@property (nonatomic, copy) NSString *altitude;
+@property (nonatomic, copy) NSString *speed;
 
-+ (instancetype)configGeneratorWithImageData:(NSData *)imageData;
++ (instancetype)configGeneratorWithLatitude:(NSString *)latitude longitude:(NSString *)longitude altitude:(NSString *)altitude speed:(NSString *)speed;
++ (instancetype)configGeneratorWithLocation:(CLLocation *)location;
 
-- (UIImage *)GPSImageWithoutGPS:(NSData *)image;
-- (BOOL)saveGPSImageWithoutGPS:(NSData *)image;
+//- (UIImage *)GPSImageWithoutGPS:(NSData *)image;
+- (BOOL)saveGPSImageWithoutGPS:(UIImage *)image;
+- (void)printImageMeataData:(NSData *)data;
 @end

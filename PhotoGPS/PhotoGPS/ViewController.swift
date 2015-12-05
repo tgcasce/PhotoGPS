@@ -7,17 +7,36 @@
 //
 
 import UIKit
-import Photos
 
 class ViewController: UIViewController {
 
-    lazy var photoController = UIImagePickerController()
+    let photoController = UIImagePickerController()
+    let actionController = UIAlertController(title: "请选择一种输入GPS信息的方式", message: nil, preferredStyle: .ActionSheet)
+    var originalImage: UIImage?
     var gpsGenerator: TGCGPSInfoGenerator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let wayOne = UIAlertAction(title: "通过经纬度坐标指定", style: .Default) { (alertAction) -> Void in
+            
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LocationInfoTableViewController")
+            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+        }
+        let wayTwo = UIAlertAction(title: "通过地名查找", style: .Default) { (alertAction) -> Void in
+            
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FindPlaceMarkViewController")
+            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+        }
+        let wayThree = UIAlertAction(title: "在地图中选点", style: .Default) { (alertAction) -> Void in
+            
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MapLocationViewController")
+            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+        }
+        self.actionController.addAction(wayOne)
+        self.actionController.addAction(wayTwo)
+        self.actionController.addAction(wayThree)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,7 +44,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func image(image: UIImage!, didFinishSavingWithError: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
+//    func image(image: UIImage!, didFinishSavingWithError: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
 //        let asset = PHAsset()
 //        asset.requestContentEditingInputWithOptions(nil) { (contentEditingInput: PHContentEditingInput?, _) -> Void in
 //            //Get full image
@@ -39,7 +58,7 @@ class ViewController: UIViewController {
 //                print("value: \(value)")
 //            }
 //        }
-    }
+//    }
     
     func configurePhotoController(isTakePhoto: Bool) {
         self.photoController.delegate = self
@@ -53,7 +72,10 @@ class ViewController: UIViewController {
             
         }
     }
-
+    
+    
+//MARK: for future use
+/*
     func writeToSavedPhotosAlbum(imageAsset: PHAsset, options: PHImageRequestOptions) {
         PHImageManager.defaultManager().requestImageDataForAsset(imageAsset, options: options, resultHandler: { (data, string, orientation, info) -> Void in
             let image = self.gpsGenerator?.GPSImageWithoutGPS(data!)
@@ -79,14 +101,12 @@ class ViewController: UIViewController {
     
     func creationRequestFor(asset: PHAsset, withLocation location: CLLocation?, options: PHImageRequestOptions) {
         PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (data, string, orientation, info) -> Void in
-            let image = self.gpsGenerator?.GPSImageWithoutGPS(data!)
+            
             PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
-                let request = PHAssetChangeRequest.creationRequestForAssetFromImage(image!)
-                if let newLocation = location {
-                    request.location = newLocation
-                }
-//                request.location = CLLocation(coordinate: CLLocationCoordinate2DMake(106.93126, 27.699961), altitude: 8848.0, horizontalAccuracy: 1, verticalAccuracy: 1, timestamp: NSDate())
-                request.favorite = true
+                
+                let request = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: documentDirectory + "/GPS.jpg")!)
+                
+                request?.favorite = true
                 }) { (success, error) -> Void in
                     NSLog("Finished updating asset. %@", (success ? "Success." : error!))
             }
@@ -96,15 +116,11 @@ class ViewController: UIViewController {
     func saveToDocumentsWithDataTo(asset: PHAsset, options: PHImageRequestOptions) {
         
         PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (dataToSave, string, orientation, info) -> Void in
-            self.gpsGenerator!.saveGPSImageWithoutGPS(dataToSave!)
+            self.gpsGenerator!.saveGPSImageWithoutGPS(UIImage(data: dataToSave!))
         })
     }
     
-    //MARK: IBAction
-    
-    @IBAction func pickPhotos(sender: UIButton) {
-//        configurePhotoController(false)
-        
+    func chooseRightWay() {
         let result: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: PHFetchOptions())
         let assetToUseMetaData = result.firstObject as! PHAsset
         let asset = result.lastObject as! PHAsset
@@ -115,16 +131,24 @@ class ViewController: UIViewController {
                 self.gpsGenerator = TGCGPSInfoGenerator.configGeneratorWithImageData(data!)
             }
         }
-        
-//        self.writeToSavedPhotosAlbum(asset, options: options)
-        
+
+        self.writeToSavedPhotosAlbum(asset, options: options)
+
         //该方法修改照片应用中的图片可以修改位置，但是实际文件似乎没有GPS信息
-//        self.assetChangeRequest(asset, withLocation: assetToUseMetaData.location)
-        
+        self.assetChangeRequest(asset, withLocation: assetToUseMetaData.location)
+
         self.creationRequestFor(assetToUseMetaData, withLocation: assetToUseMetaData.location, options: options)
-        
+
         //该方法将图片存到应用Documents文件夹中，并且图片带有GPS元数据
-//        self.saveToDocumentsWithDataTo(asset, options: options)
+        self.saveToDocumentsWithDataTo(asset, options: options)
+    }
+*/
+    
+    
+    //MARK: IBAction
+    
+    @IBAction func pickPhotos(sender: UIButton) {
+        configurePhotoController(false)
     }
     
     @IBAction func takePhoto(sender: UIButton) {
@@ -135,11 +159,13 @@ class ViewController: UIViewController {
 extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        
-//        let image = TGCGPSInfoGenerator().GPSImageWithoutGPS(info[UIImagePickerControllerOriginalImage] as! UIImage)
 
-//        self.dismissViewControllerAnimated(true, completion: nil)
+        self.originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            
+            self.presentViewController(self.actionController, animated: true, completion: nil)
+        }
     }
     
 //    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
