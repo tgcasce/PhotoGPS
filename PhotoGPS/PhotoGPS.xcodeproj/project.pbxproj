@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4224D1BF1C12FCD3003E7850 /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4224D1BE1C12FCD3003E7850 /* MapLocationViewController.swift */; };
+		4224D1C31C133285003E7850 /* TGCAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4224D1C21C133285003E7850 /* TGCAlertController.swift */; };
 		422721A41C0D9C7C0055AB75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721A31C0D9C7C0055AB75 /* AppDelegate.swift */; };
 		422721A61C0D9C7C0055AB75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721A51C0D9C7C0055AB75 /* ViewController.swift */; };
 		422721A91C0D9C7C0055AB75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 422721A71C0D9C7C0055AB75 /* Main.storyboard */; };
@@ -17,10 +18,12 @@
 		422721BC1C11AA1E0055AB75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721BB1C11AA1E0055AB75 /* Constants.swift */; };
 		422721C01C11C4930055AB75 /* LocationInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721BF1C11C4930055AB75 /* LocationInfoTableViewController.swift */; };
 		422721C21C129A060055AB75 /* FindPlaceMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422721C11C129A060055AB75 /* FindPlaceMarkViewController.swift */; };
+		4293702B1C2C3ECC0032855E /* bkg.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4293702A1C2C3ECC0032855E /* bkg.JPG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4224D1BE1C12FCD3003E7850 /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
+		4224D1C21C133285003E7850 /* TGCAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TGCAlertController.swift; sourceTree = "<group>"; };
 		422721A01C0D9C7C0055AB75 /* PhotoGPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoGPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		422721A31C0D9C7C0055AB75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		422721A51C0D9C7C0055AB75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -34,6 +37,7 @@
 		422721BB1C11AA1E0055AB75 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		422721BF1C11C4930055AB75 /* LocationInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInfoTableViewController.swift; sourceTree = "<group>"; };
 		422721C11C129A060055AB75 /* FindPlaceMarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindPlaceMarkViewController.swift; sourceTree = "<group>"; };
+		4293702A1C2C3ECC0032855E /* bkg.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bkg.JPG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 		422721A21C0D9C7C0055AB75 /* PhotoGPS */ = {
 			isa = PBXGroup;
 			children = (
+				4293702A1C2C3ECC0032855E /* bkg.JPG */,
 				422721A31C0D9C7C0055AB75 /* AppDelegate.swift */,
 				422721A51C0D9C7C0055AB75 /* ViewController.swift */,
 				422721A71C0D9C7C0055AB75 /* Main.storyboard */,
@@ -79,6 +84,7 @@
 				422721BF1C11C4930055AB75 /* LocationInfoTableViewController.swift */,
 				422721C11C129A060055AB75 /* FindPlaceMarkViewController.swift */,
 				4224D1BE1C12FCD3003E7850 /* MapLocationViewController.swift */,
+				4224D1C21C133285003E7850 /* TGCAlertController.swift */,
 			);
 			path = PhotoGPS;
 			sourceTree = "<group>";
@@ -144,6 +150,7 @@
 			files = (
 				422721AE1C0D9C7C0055AB75 /* LaunchScreen.storyboard in Resources */,
 				422721AB1C0D9C7C0055AB75 /* Assets.xcassets in Resources */,
+				4293702B1C2C3ECC0032855E /* bkg.JPG in Resources */,
 				422721A91C0D9C7C0055AB75 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +167,7 @@
 				422721A61C0D9C7C0055AB75 /* ViewController.swift in Sources */,
 				422721A41C0D9C7C0055AB75 /* AppDelegate.swift in Sources */,
 				422721BC1C11AA1E0055AB75 /* Constants.swift in Sources */,
+				4224D1C31C133285003E7850 /* TGCAlertController.swift in Sources */,
 				422721C21C129A060055AB75 /* FindPlaceMarkViewController.swift in Sources */,
 				422721C01C11C4930055AB75 /* LocationInfoTableViewController.swift in Sources */,
 			);
@@ -280,7 +288,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoGPS/PhotoGPS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -295,7 +303,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tgcasce.PhotoGPS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PhotoGPS/PhotoGPS-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

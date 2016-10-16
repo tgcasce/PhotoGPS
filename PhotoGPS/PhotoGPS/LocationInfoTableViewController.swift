@@ -48,6 +48,7 @@ class LocationInfoTableViewController: UITableViewController {
             return
         }
 
+        self.view.endEditing(true)
         self.view.userInteractionEnabled = false
         let gpsInfoGenerator = TGCGPSInfoGenerator.configGeneratorWithLatitude(latitude, longitude: longitude, altitude: altitude, speed: speed)
         let success = gpsInfoGenerator.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
@@ -57,14 +58,20 @@ class LocationInfoTableViewController: UITableViewController {
                 let _ = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: tempImagePath)!)
                 }, completionHandler: { (success, error) -> Void in
                     self.view.userInteractionEnabled = true
-                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        if success {
+                            self.presentViewController(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }), animated: true, completion: nil)
+                        } else {
+                            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                        }
+                    })
             })
         } else {
             self.view.userInteractionEnabled = true
-            
-            return
+            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
         }
-        self.giveUp(sender)
     }
     
     @IBAction func giveUp(sender: UIButton) {
@@ -74,5 +81,28 @@ class LocationInfoTableViewController: UITableViewController {
     
     @IBAction func dismissKeyboard(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
+    }
+}
+
+extension LocationInfoTableViewController: UITextFieldDelegate {
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let allowedCharacter = NSCharacterSet(charactersInString: "-1234567890.").invertedSet
+        let filterdString = string.componentsSeparatedByCharactersInSet(allowedCharacter).joinWithSeparator("")
+        return filterdString == string
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        if textField.tag == 1 {
+            self.longitudeTextField.becomeFirstResponder()
+        } else if textField.tag == 2 {
+            self.altitudeTextField.becomeFirstResponder()
+        } else if textField.tag == 3 {
+            self.speedTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
 }

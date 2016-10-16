@@ -64,14 +64,20 @@ class MapLocationViewController: UIViewController {
                 }, completionHandler: { (success, error) -> Void in
                     
                     self.view.userInteractionEnabled = true
-                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        if success {
+                            self.presentViewController(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }), animated: true, completion: nil)
+                        } else {
+                            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                        }
+                    })
             })
         } else {
             self.view.userInteractionEnabled = true
-            
-            return
+            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
         }
-        self.cancelModify(sender)
     }
     
     @IBAction func cancelModify(sender: UIButton) {
@@ -79,10 +85,6 @@ class MapLocationViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-}
-
-extension MapLocationViewController: MKMapViewDelegate {
-    
 }
 
 class TGCAnnotation: NSObject, MKAnnotation {

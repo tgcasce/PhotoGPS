@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
     let photoController = UIImagePickerController()
     let actionController = UIAlertController(title: "请选择一种输入GPS信息的方式", message: nil, preferredStyle: .ActionSheet)
     var originalImage: UIImage?
@@ -18,25 +19,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        let wayOne = UIAlertAction(title: "通过经纬度坐标指定", style: .Default) { (alertAction) -> Void in
-            
-            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LocationInfoTableViewController")
-            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
-        }
-        let wayTwo = UIAlertAction(title: "通过地名查找", style: .Default) { (alertAction) -> Void in
-            
-            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FindPlaceMarkViewController")
-            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
-        }
-        let wayThree = UIAlertAction(title: "在地图中选点", style: .Default) { (alertAction) -> Void in
-            
-            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MapLocationViewController")
-            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
-        }
-        self.actionController.addAction(wayOne)
-        self.actionController.addAction(wayTwo)
-        self.actionController.addAction(wayThree)
+        configureActionController()
+        configureMotionEffects()
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,7 +44,39 @@ class ViewController: UIViewController {
 //        }
 //    }
     
-    func configurePhotoController(isTakePhoto: Bool) {
+    private func configureActionController() {
+        let wayOne = UIAlertAction(title: "通过经纬度坐标指定", style: .Default) { (alertAction) -> Void in
+            
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LocationInfoTableViewController")
+            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+        }
+        let wayTwo = UIAlertAction(title: "通过地名查找", style: .Default) { (alertAction) -> Void in
+            
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FindPlaceMarkViewController")
+            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+        }
+        let wayThree = UIAlertAction(title: "在地图中选点", style: .Default) { (alertAction) -> Void in
+            
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MapLocationViewController")
+            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+        }
+        self.actionController.addAction(wayOne)
+        self.actionController.addAction(wayTwo)
+        self.actionController.addAction(wayThree)
+    }
+    
+    private func configureMotionEffects() {
+        let horizontalEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+        horizontalEffect.minimumRelativeValue = -50.0
+        horizontalEffect.maximumRelativeValue = 50.0
+        let verticalEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+        verticalEffect.minimumRelativeValue = -50.0
+        verticalEffect.maximumRelativeValue = 50.0
+        self.backgroundImageView.addMotionEffect(horizontalEffect)
+        self.backgroundImageView.addMotionEffect(verticalEffect)
+    }
+    
+    private func configurePhotoController(isTakePhoto: Bool) {
         self.photoController.delegate = self
         if isTakePhoto {
             self.photoController.sourceType = UIImagePickerControllerSourceType.Camera

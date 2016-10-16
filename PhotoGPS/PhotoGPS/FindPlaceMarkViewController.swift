@@ -123,6 +123,7 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
         if let places = self.resultPlaces {
             let place = places[indexPath.row]
             if let location = place.location {
+                self.placeTextField.resignFirstResponder()
                 self.view.userInteractionEnabled = false
                 let gpsInfoGenerator = TGCGPSInfoGenerator.configGeneratorWithLocation(location)
                 let success = gpsInfoGenerator.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
@@ -133,17 +134,22 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
                         }, completionHandler: { (success, error) -> Void in
                             
                             self.view.userInteractionEnabled = true
-                            
+                            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                                if success {
+                                    self.presentViewController(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
+                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                    }), animated: true, completion: nil)
+                                } else {
+                                    self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                                }
+                            })
                     })
                 } else {
                     self.view.userInteractionEnabled = true
-                    
-                    return
+                    self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
                 }
             }
         }
-        (self.presentingViewController as! ViewController).originalImage = nil
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

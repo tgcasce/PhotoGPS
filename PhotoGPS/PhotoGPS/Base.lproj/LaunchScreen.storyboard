@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8150" systemVersion="15A204g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8122"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,13 +16,38 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bkg.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="JB0-gO-Blg">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="随心所欲改变照片定位" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ro9-ro-jfH">
+                                <rect key="frame" x="212" y="28" width="176" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="176" id="WgV-jq-cNp"/>
+                                    <constraint firstAttribute="height" constant="38" id="fH9-1X-o3j"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JB0-gO-Blg" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="0MS-ez-enj"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="JB0-gO-Blg" secondAttribute="bottom" id="3Ki-DI-ci7"/>
+                            <constraint firstAttribute="trailing" secondItem="JB0-gO-Blg" secondAttribute="trailing" id="aq7-mr-1jU"/>
+                            <constraint firstItem="ro9-ro-jfH" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" id="eUe-ri-BtO"/>
+                            <constraint firstItem="ro9-ro-jfH" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="izf-uh-5iK"/>
+                            <constraint firstItem="JB0-gO-Blg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="l6M-wI-vZJ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="20" y="339"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bkg.JPG" width="3264" height="2448"/>
+    </resources>
 </document>
