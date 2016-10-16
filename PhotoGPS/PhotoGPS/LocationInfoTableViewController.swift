@@ -33,7 +33,7 @@ class LocationInfoTableViewController: UITableViewController {
 
     //MARK: IBAction
     
-    @IBAction func confirmModify(sender: UIButton) {
+    @IBAction func confirmModify(_ sender: UIButton) {
         
         guard let latitude = self.latitudeTextField.text else {
             return
@@ -49,50 +49,50 @@ class LocationInfoTableViewController: UITableViewController {
         }
 
         self.view.endEditing(true)
-        self.view.userInteractionEnabled = false
-        let gpsInfoGenerator = TGCGPSInfoGenerator.configGeneratorWithLatitude(latitude, longitude: longitude, altitude: altitude, speed: speed)
-        let success = gpsInfoGenerator.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
-        if success {
-            PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+        self.view.isUserInteractionEnabled = false
+        let gpsInfoGenerator = TGCGPSInfoGenerator.configGenerator(withLatitude: latitude, longitude: longitude, altitude: altitude, speed: speed)
+        let success = gpsInfoGenerator?.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
+        if success! {
+            PHPhotoLibrary.shared().performChanges({ () -> Void in
                 
-                let _ = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: tempImagePath)!)
+                let _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: URL(string: tempImagePath)!)
                 }, completionHandler: { (success, error) -> Void in
-                    self.view.userInteractionEnabled = true
-                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.view.isUserInteractionEnabled = true
+                    OperationQueue.main.addOperation({ () -> Void in
                         if success {
-                            self.presentViewController(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
-                                self.dismissViewControllerAnimated(true, completion: nil)
+                            self.present(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
+                                self.dismiss(animated: true, completion: nil)
                             }), animated: true, completion: nil)
                         } else {
-                            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                            self.present(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
                         }
                     })
             })
         } else {
-            self.view.userInteractionEnabled = true
-            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+            self.view.isUserInteractionEnabled = true
+            self.present(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
         }
     }
     
-    @IBAction func giveUp(sender: UIButton) {
+    @IBAction func giveUp(_ sender: UIButton) {
         (self.presentingViewController as! ViewController).originalImage = nil
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func dismissKeyboard(sender: UITapGestureRecognizer) {
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
 }
 
 extension LocationInfoTableViewController: UITextFieldDelegate {
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacter = NSCharacterSet(charactersInString: "-1234567890.").invertedSet
-        let filterdString = string.componentsSeparatedByCharactersInSet(allowedCharacter).joinWithSeparator("")
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let allowedCharacter = CharacterSet(charactersIn: "-1234567890.").inverted
+        let filterdString = string.components(separatedBy: allowedCharacter).joined(separator: "")
         return filterdString == string
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField.tag == 1 {
             self.longitudeTextField.becomeFirstResponder()

@@ -28,8 +28,8 @@ class MapLocationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cancelPreviousSelect(sender: UITapGestureRecognizer) {
-        self.confirmButton.enabled = false
+    @IBAction func cancelPreviousSelect(_ sender: UITapGestureRecognizer) {
+        self.confirmButton.isEnabled = false
         self.mapLocation = nil
         if self.mapAnnotation != nil {
             self.mapView.removeAnnotation(self.mapAnnotation!)
@@ -37,52 +37,52 @@ class MapLocationViewController: UIViewController {
         }
     }
     
-    @IBAction func selectPlace(sender: UILongPressGestureRecognizer) {
-        if sender.state == .Began {
+    @IBAction func selectPlace(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
             if self.mapAnnotation != nil {
                 self.mapView.removeAnnotation(self.mapAnnotation!)
                 self.mapAnnotation = nil
             }
-            let point = sender.locationInView(self.mapView)
-            let coordinate = mapView.convertPoint(point, toCoordinateFromView: self.mapView)
+            let point = sender.location(in: self.mapView)
+            let coordinate = mapView.convert(point, toCoordinateFrom: self.mapView)
             self.mapLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             self.mapAnnotation = TGCAnnotation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             self.mapView.addAnnotation(self.mapAnnotation!)
-        } else if sender.state == .Ended {
-            self.confirmButton.enabled = true
+        } else if sender.state == .ended {
+            self.confirmButton.isEnabled = true
         }
     }
 
-    @IBAction func confirmPlace(sender: UIButton) {
-        self.view.userInteractionEnabled = false
-        let gpsInfoGenerator = TGCGPSInfoGenerator.configGeneratorWithLocation(self.mapLocation)
-        let success = gpsInfoGenerator.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
-        if success {
-            PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+    @IBAction func confirmPlace(_ sender: UIButton) {
+        self.view.isUserInteractionEnabled = false
+        let gpsInfoGenerator = TGCGPSInfoGenerator.configGenerator(with: self.mapLocation)
+        let success = gpsInfoGenerator?.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
+        if success! {
+            PHPhotoLibrary.shared().performChanges({ () -> Void in
                 
-                let _ = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: tempImagePath)!)
+                let _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: URL(string: tempImagePath)!)
                 }, completionHandler: { (success, error) -> Void in
                     
-                    self.view.userInteractionEnabled = true
-                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.view.isUserInteractionEnabled = true
+                    OperationQueue.main.addOperation({ () -> Void in
                         if success {
-                            self.presentViewController(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
-                                self.dismissViewControllerAnimated(true, completion: nil)
+                            self.present(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
+                                self.dismiss(animated: true, completion: nil)
                             }), animated: true, completion: nil)
                         } else {
-                            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                            self.present(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
                         }
                     })
             })
         } else {
-            self.view.userInteractionEnabled = true
-            self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+            self.view.isUserInteractionEnabled = true
+            self.present(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
         }
     }
     
-    @IBAction func cancelModify(sender: UIButton) {
+    @IBAction func cancelModify(_ sender: UIButton) {
         (self.presentingViewController as! ViewController).originalImage = nil
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

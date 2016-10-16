@@ -8,5 +8,5 @@
 
 import Foundation
 
-let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
 let tempImagePath = NSTemporaryDirectory() + "/tmpGPSImage.jpg"

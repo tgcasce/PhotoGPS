@@ -30,17 +30,17 @@ class FindPlaceMarkViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func searchPlace(sender: UIButton) {
+    @IBAction func searchPlace(_ sender: UIButton) {
         self.firstSearch = false
-        sender.hidden = true
+        sender.isHidden = true
         self.placeTextField.resignFirstResponder()
         
         guard let placeString = self.placeTextField.text else {
-            sender.hidden = false
+            sender.isHidden = false
             return
         }
         guard placeString.isEmpty == false else {
-            sender.hidden = false
+            sender.isHidden = false
             return
         }
         
@@ -51,7 +51,7 @@ class FindPlaceMarkViewController: UIViewController {
                 self.resultPlaces = nil
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
-                sender.hidden = false
+                sender.isHidden = false
                 print(error?.localizedDescription)
                 return
             }
@@ -59,20 +59,20 @@ class FindPlaceMarkViewController: UIViewController {
             self.resultPlaces = places
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            sender.hidden = false
+            sender.isHidden = false
         }
         
     }
     
-    @IBAction func cancelModify(sender: UIButton) {
+    @IBAction func cancelModify(_ sender: UIButton) {
         (self.presentingViewController as! ViewController).originalImage = nil
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.firstSearch || self.resultPlaces == nil {
             return 0
         } else {
@@ -80,10 +80,10 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ResultCell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath)
         if let places = self.resultPlaces {
-            let place = places[indexPath.row]
+            let place = places[(indexPath as NSIndexPath).row]
             cell.textLabel?.text = place.name
             var detail = ""
             if let country = place.country {
@@ -107,7 +107,7 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if self.firstSearch {
             return ""
         }
@@ -118,35 +118,35 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         if let places = self.resultPlaces {
-            let place = places[indexPath.row]
+            let place = places[(indexPath as NSIndexPath).row]
             if let location = place.location {
                 self.placeTextField.resignFirstResponder()
-                self.view.userInteractionEnabled = false
-                let gpsInfoGenerator = TGCGPSInfoGenerator.configGeneratorWithLocation(location)
-                let success = gpsInfoGenerator.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
-                if success {
-                    PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+                self.view.isUserInteractionEnabled = false
+                let gpsInfoGenerator = TGCGPSInfoGenerator.configGenerator(with: location)
+                let success = gpsInfoGenerator?.saveGPSImageWithoutGPS((self.presentingViewController as! ViewController).originalImage!)
+                if success! {
+                    PHPhotoLibrary.shared().performChanges({ () -> Void in
                         
-                        let _ = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: tempImagePath)!)
+                        let _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: URL(string: tempImagePath)!)
                         }, completionHandler: { (success, error) -> Void in
                             
-                            self.view.userInteractionEnabled = true
-                            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                            self.view.isUserInteractionEnabled = true
+                            OperationQueue.main.addOperation({ () -> Void in
                                 if success {
-                                    self.presentViewController(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
-                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                    self.present(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
+                                        self.dismiss(animated: true, completion: nil)
                                     }), animated: true, completion: nil)
                                 } else {
-                                    self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                                    self.present(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
                                 }
                             })
                     })
                 } else {
-                    self.view.userInteractionEnabled = true
-                    self.presentViewController(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
+                    self.view.isUserInteractionEnabled = true
+                    self.present(TGCAlertController.alertControllerWith("请重新尝试", message: nil, handler: nil), animated: true, completion: nil)
                 }
             }
         }
@@ -156,7 +156,7 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
 
 extension FindPlaceMarkViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

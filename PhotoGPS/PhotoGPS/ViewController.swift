@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     let photoController = UIImagePickerController()
-    let actionController = UIAlertController(title: "请选择一种输入GPS信息的方式", message: nil, preferredStyle: .ActionSheet)
+    let actionController = UIAlertController(title: "请选择一种输入GPS信息的方式", message: nil, preferredStyle: .actionSheet)
     var originalImage: UIImage?
     var gpsGenerator: TGCGPSInfoGenerator?
     
@@ -44,47 +44,47 @@ class ViewController: UIViewController {
 //        }
 //    }
     
-    private func configureActionController() {
-        let wayOne = UIAlertAction(title: "通过经纬度坐标指定", style: .Default) { (alertAction) -> Void in
+    fileprivate func configureActionController() {
+        let wayOne = UIAlertAction(title: "通过经纬度坐标指定", style: .default) { (alertAction) -> Void in
             
-            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LocationInfoTableViewController")
-            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationInfoTableViewController")
+            self.present(locationInfoTableViewController, animated: true, completion: nil)
         }
-        let wayTwo = UIAlertAction(title: "通过地名查找", style: .Default) { (alertAction) -> Void in
+        let wayTwo = UIAlertAction(title: "通过地名查找", style: .default) { (alertAction) -> Void in
             
-            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FindPlaceMarkViewController")
-            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FindPlaceMarkViewController")
+            self.present(locationInfoTableViewController, animated: true, completion: nil)
         }
-        let wayThree = UIAlertAction(title: "在地图中选点", style: .Default) { (alertAction) -> Void in
+        let wayThree = UIAlertAction(title: "在地图中选点", style: .default) { (alertAction) -> Void in
             
-            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MapLocationViewController")
-            self.presentViewController(locationInfoTableViewController, animated: true, completion: nil)
+            let locationInfoTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapLocationViewController")
+            self.present(locationInfoTableViewController, animated: true, completion: nil)
         }
         self.actionController.addAction(wayOne)
         self.actionController.addAction(wayTwo)
         self.actionController.addAction(wayThree)
     }
     
-    private func configureMotionEffects() {
-        let horizontalEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+    fileprivate func configureMotionEffects() {
+        let horizontalEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
         horizontalEffect.minimumRelativeValue = -50.0
         horizontalEffect.maximumRelativeValue = 50.0
-        let verticalEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+        let verticalEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
         verticalEffect.minimumRelativeValue = -50.0
         verticalEffect.maximumRelativeValue = 50.0
         self.backgroundImageView.addMotionEffect(horizontalEffect)
         self.backgroundImageView.addMotionEffect(verticalEffect)
     }
     
-    private func configurePhotoController(isTakePhoto: Bool) {
+    fileprivate func configurePhotoController(_ isTakePhoto: Bool) {
         self.photoController.delegate = self
         if isTakePhoto {
-            self.photoController.sourceType = UIImagePickerControllerSourceType.Camera
+            self.photoController.sourceType = UIImagePickerControllerSourceType.camera
         } else {
-            self.photoController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            self.photoController.sourceType = UIImagePickerControllerSourceType.photoLibrary
         }
         
-        self.presentViewController(self.photoController, animated: true) { () -> Void in
+        self.present(self.photoController, animated: true) { () -> Void in
             
         }
     }
@@ -163,24 +163,24 @@ class ViewController: UIViewController {
     
     //MARK: IBAction
     
-    @IBAction func pickPhotos(sender: UIButton) {
+    @IBAction func pickPhotos(_ sender: UIButton) {
         configurePhotoController(false)
     }
     
-    @IBAction func takePhoto(sender: UIButton) {
+    @IBAction func takePhoto(_ sender: UIButton) {
         configurePhotoController(true)
     }
 }
 
 extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
 
         self.originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
 
-        self.dismissViewControllerAnimated(true) { () -> Void in
+        self.dismiss(animated: true) { () -> Void in
             
-            self.presentViewController(self.actionController, animated: true, completion: nil)
+            self.present(self.actionController, animated: true, completion: nil)
         }
     }
     

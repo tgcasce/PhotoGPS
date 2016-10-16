@@ -10,9 +10,9 @@ import UIKit
 
 class TGCAlertController: NSObject {
     
-    class func alertControllerWith(title: String?, message: String?, handler: ((UIAlertAction) -> Void)?) -> UIAlertController {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "好的", style: .Cancel, handler: handler))
+    class func alertControllerWith(_ title: String?, message: String?, handler: ((UIAlertAction) -> Void)?) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "好的", style: .cancel, handler: handler))
         return alertController
     }
     
