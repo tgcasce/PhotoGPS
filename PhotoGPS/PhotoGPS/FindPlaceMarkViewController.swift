@@ -52,7 +52,7 @@ class FindPlaceMarkViewController: UIViewController {
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
                 sender.isHidden = false
-                print(error?.localizedDescription)
+                print(error?.localizedDescription ?? "未知错误")
                 return
             }
             
@@ -133,8 +133,8 @@ extension FindPlaceMarkViewController: UITableViewDataSource, UITableViewDelegat
                         let _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: URL(string: tempImagePath)!)
                         }, completionHandler: { (success, error) -> Void in
                             
-                            self.view.isUserInteractionEnabled = true
                             OperationQueue.main.addOperation({ () -> Void in
+                                self.view.isUserInteractionEnabled = true
                                 if success {
                                     self.present(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
                                         self.dismiss(animated: true, completion: nil)

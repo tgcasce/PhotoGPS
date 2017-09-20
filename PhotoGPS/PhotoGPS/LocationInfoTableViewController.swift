@@ -57,8 +57,9 @@ class LocationInfoTableViewController: UITableViewController {
                 
                 let _ = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: URL(string: tempImagePath)!)
                 }, completionHandler: { (success, error) -> Void in
-                    self.view.isUserInteractionEnabled = true
+                    
                     OperationQueue.main.addOperation({ () -> Void in
+                        self.view.isUserInteractionEnabled = true
                         if success {
                             self.present(TGCAlertController.alertControllerWith("修改成功", message: nil, handler: { (alertAction) -> Void in
                                 self.dismiss(animated: true, completion: nil)
